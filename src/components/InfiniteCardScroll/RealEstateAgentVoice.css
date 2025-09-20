@@ -1,0 +1,44 @@
+/* Custom styles for RealEstateAgentVoice */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Customize react-phone-input-2 */
+.react-tel-input .form-control {
+  width: 100% !important;
+  height: 2.5rem !important;
+  border-radius: 0.5rem !important;
+  border: 2px solid #FEE2E2 !important;
+  background-color: #FEF3C7 !important;
+  padding-left: 3rem !important;
+  color: #1F2937 !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-tel-input .form-control:focus {
+  border-color: #F97316 !important;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: #FEF3C7 !important;
+  border: 2px solid #FEE2E2 !important;
+  border-right: none !important;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+}
+
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
+  background-color: #FFEDD5 !important;
+}

@@ -18,7 +18,7 @@ const AudioWaveform: React.FC = () => {
       {heights.map((height, i) => (
         <div 
           key={i} 
-          className="bg-white w-[2px] transition-all duration-150" 
+          className="bg-orange-600 w-[2px] transition-all duration-150" 
           style={{ height: `${height}px` }}
         />
       ))}

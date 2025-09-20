@@ -1,13 +1,13 @@
 import React from "react";
 import { ArrowLeft, Mic, Star, Users, Clock, Award } from "lucide-react";
 import "./AgentDetail.css";
-import { agentDetails } from "../../data/data";
 import { CardInterface } from "../../types";
+import { agentDetails } from "../../data/data";
 
 interface AgentDetailProps {
   agent: CardInterface;
   onBack: () => void;
-  handleStart: () => void;
+  handleStart: (agent: CardInterface) => void;
   handleEnd: () => void;
   getAgentName: (agentName: string) => void;
 }
@@ -25,7 +25,7 @@ export const AgentDetail: React.FC<AgentDetailProps> = ({
   const handleTryDemo = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    handleStart();
+    handleStart(agent);
     getAgentName(agent.title);
   };
 

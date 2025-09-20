@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback, memo } from "react";
 import { Card } from "./Card";
-import RealEstateAgentVoice from "./RealEstateAgentVoice";
 import "./InfiniteCardScroll.css";
 import { CardInterface } from "../../types";
 
@@ -8,15 +7,12 @@ interface InfiniteCardScrollProps {
   cards: CardInterface[];
   className?: string;
   pauseDuration?: number;
-  handleStart: () => void;
+  handleStart: (agent: CardInterface) => void;
   handleEnd: () => void;
   stopScrolls?: boolean;
   resumeScrolls?: boolean;
-  showRealEstateAgentVoice?: boolean;
   sessionStatus?: string | null;
   onAgentSelect: (agent: CardInterface) => void;
-  handleStartWithLead: (agent_code: string, leadData: { name: string; email: string; phone: string }) => void;
-  selectedAgent?: CardInterface | null;
 }
 
 const CARD_WIDTH = 280 + 24; // Card width + margin
@@ -30,18 +26,14 @@ export const InfiniteCardScroll: React.FC<InfiniteCardScrollProps> = memo(
     handleEnd,
     stopScrolls = false,
     resumeScrolls = false,
-    showRealEstateAgentVoice,
     sessionStatus,
     onAgentSelect,
-    handleStartWithLead,
-    selectedAgent,
   }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const restartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const [isScrolling, setIsScrolling] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [agentName, setAgentName] = useState<string | null>(null);
 
     // Touch support
     const touchStartX = useRef<number>(0);
@@ -225,16 +217,6 @@ export const InfiniteCardScroll: React.FC<InfiniteCardScrollProps> = memo(
         role="region"
         aria-label="Card carousel"
       >
-        {showRealEstateAgentVoice && (
-          <RealEstateAgentVoice
-            onClose={handleEnd}
-            sessionStatus={sessionStatus}
-            agentName={agentName}
-            handleStart={handleStartWithLead}
-            selectedAgent={selectedAgent}
-          />
-        )}
-
         <div className="navigation-controls relative">
           <button
             className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-100 shadow-md rounded-full w-10 h-10 flex items-center justify-center text-gray-800 hover:text-black transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -268,7 +250,6 @@ export const InfiniteCardScroll: React.FC<InfiniteCardScrollProps> = memo(
                   isActive={false}
                   handleStart={handleStart}
                   handleEnd={handleEnd}
-                  getAgentName={setAgentName}
                   onAgentSelect={onAgentSelect}
                 />
               </div>

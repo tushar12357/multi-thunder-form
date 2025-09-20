@@ -6,9 +6,8 @@ import { CardInterface } from "../../types";
 interface CardProps {
   card: CardInterface;
   isActive: boolean;
-  handleStart: () => void;
+  handleStart: (agent: CardInterface) => void;
   handleEnd: () => void;
-  getAgentName: (agentName: string) => void;
   onAgentSelect?: (agent: CardInterface) => void;
 }
 
@@ -16,7 +15,6 @@ export const Card: React.FC<CardProps> = ({
   card,
   isActive,
   handleStart,
-  getAgentName,
   onAgentSelect,
 }) => {
   const Icon = card.icon;
@@ -48,8 +46,7 @@ export const Card: React.FC<CardProps> = ({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            handleStart();
-            getAgentName(card.title);
+            handleStart(card);
           }}
         >
           <Mic size={16} />
