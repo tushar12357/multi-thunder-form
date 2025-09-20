@@ -53,10 +53,9 @@ const App: React.FC = () => {
 
   // Handle call end when session disconnects
   useEffect(() => {
-    if (sessionStatus === "disconnected") {
+    if (sessionStatus === "disconnecting") {
       console.log("Session disconnected, ending call");
       handleEnd();
-      setShowRealEstateAgentVoice(false);
     }
   }, [sessionStatus]);
 
@@ -70,7 +69,7 @@ const App: React.FC = () => {
         console.log("Starting Thunder API call with agent_code:", agent_code, "leadData:", leadData);
         const response = await axios.post("https://app.snowie.ai/api/start-thunder/", {
           agent_code,
-          schema_name: "6af30ad4-a50c-4acc-8996-d5f562b6987f",
+          schema_name: "7a5a46c6-a08e-477c-93c8-5afd7565069c",
           ...leadData,
         });
         console.log("start-thunder response:", response.data);
@@ -103,7 +102,6 @@ const App: React.FC = () => {
   const handleEnd = async () => {
     console.log("Handling call end");
     await sessionRef.current?.leaveCall();
-    setShowRealEstateAgentVoice(false);
     setIsListening(false);
   };
 
