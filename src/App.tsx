@@ -12,9 +12,13 @@ const App: React.FC = () => {
   const [callId, setCallId] = useState<string | null>(null);
   const [sessionStatus, setSessionStatus] = useState<string | null>(null);
   const [callSessionId, setCallSessionId] = useState<string | null>(null);
-  const [showRealEstateAgentVoice, setShowRealEstateAgentVoice] = useState<boolean>(false);
-  const [selectedAgent, setSelectedAgent] = useState<CardInterface | null>(null);
-  const [currentAgentForForm, setCurrentAgentForForm] = useState<CardInterface | null>(null);
+  const [showRealEstateAgentVoice, setShowRealEstateAgentVoice] =
+    useState<boolean>(false);
+  const [selectedAgent, setSelectedAgent] = useState<CardInterface | null>(
+    null
+  );
+  const [currentAgentForForm, setCurrentAgentForForm] =
+    useState<CardInterface | null>(null);
   const [defaultCountryCode, setDefaultCountryCode] = useState<string>("+1");
   const sessionRef = useRef<UltravoxSession | null>(null);
 
@@ -59,19 +63,30 @@ const App: React.FC = () => {
     }
   }, [sessionStatus]);
 
-  const handleStart = async (agent_code: string, leadData?: { name: string; email: string; phone: string }) => {
+  const handleStart = async (
+    agent_code: string,
+    leadData?: { name: string; email: string; phone: string }
+  ) => {
     if (sessionStatus !== "disconnected") {
       await handleEnd();
     }
 
     try {
       if (!isListening) {
-        console.log("Starting Thunder API call with agent_code:", agent_code, "leadData:", leadData);
-        const response = await axios.post("https://app.snowie.ai/api/start-thunder/", {
+        console.log(
+          "Starting Thunder API call with agent_code:",
           agent_code,
-          schema_name: "7a5a46c6-a08e-477c-93c8-5afd7565069c",
-          ...leadData,
-        });
+          "leadData:",
+          leadData
+        );
+        const response = await axios.post(
+          "https://app.snowie.ai/api/start-thunder/",
+          {
+            agent_code,
+            schema_name: "7a5a46c6-a08e-477c-93c8-5afd7565069c",
+            ...leadData,
+          }
+        );
         console.log("start-thunder response:", response.data);
         const wssUrl = response.data.joinUrl;
         setCallId(response.data.callId);
@@ -85,11 +100,14 @@ const App: React.FC = () => {
       } else {
         console.log("Ending active call");
         await sessionRef.current?.leaveCall();
-        await axios.post("https://app.snowie.ai/api/end-call-session-thunder/", {
-          call_session_id: callSessionId,
-          call_id: callId,
-          schema_name: "6af30ad4-a50c-4acc-8996-d5f562b6987f",
-        });
+        await axios.post(
+          "https://app.snowie.ai/api/end-call-session-thunder/",
+          {
+            call_session_id: callSessionId,
+            call_id: callId,
+            schema_name: "6af30ad4-a50c-4acc-8996-d5f562b6987f",
+          }
+        );
         setIsListening(false);
         setShowRealEstateAgentVoice(false);
       }
@@ -132,6 +150,7 @@ const App: React.FC = () => {
           }}
           sessionStatus={sessionStatus}
           handleStart={handleStart}
+          handleEnd={handleEnd} // Pass handleEnd
           selectedAgent={currentAgentForForm || selectedAgent}
           defaultCountryCode={defaultCountryCode}
         />
@@ -142,7 +161,9 @@ const App: React.FC = () => {
           onBack={handleBack}
           handleStart={() => showFormForAgent(selectedAgent)}
           handleEnd={handleEnd}
-          getAgentName={(agentName: string) => console.log("Agent Name:", agentName)}
+          getAgentName={(agentName: string) =>
+            console.log("Agent Name:", agentName)
+          }
         />
       ) : (
         <InfiniteCardScroll
