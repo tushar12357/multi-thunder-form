@@ -20,7 +20,7 @@ export const mockCards: CardInterface[] = [
     imageUrl: "#FF7043", // Light Orange
     icon: Shirt, // Icon for retail/e-commerce
     tags: ["Retail", "Sales"],
-    agent_code: "d7ac6c9b-b5d9-4eb9-9950-9154fb32b163",
+    agent_code: "be4ce13a-8c13-414c-916a-32b2b57760d8",
   },
   {
     id: 3,
