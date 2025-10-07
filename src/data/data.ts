@@ -126,7 +126,7 @@ export const agentDetails: Record<string, AgentDetails> = {
       conversionTimeReduction: "40%",
     },
   },
-  Ecommerce: {
+  "E-commerce": {
     fullDescription:
       "Ravan.ai's Ecommerce AI Voice Assistant revolutionizes online shopping experiences with 24/7 customer support, instant product recommendations, and seamless cart recovery, driving 5× more conversions and 38% higher average order values.",
     problems: [
